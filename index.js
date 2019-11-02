@@ -31,3 +31,43 @@ sequelize
   .authenticate()
   .then(() => console.log("Connection has been established successfully."))
   .catch(err => console.error("Unable to connect to the database:", err));
+
+// create user model
+const User = sequelize.define("user", {
+  name: {
+    type: Sequelize.STRING
+  },
+  password: {
+    type: Sequelize.STRING
+  }
+});
+
+// create table with user model
+User.sync()
+  .then(() => console.log("Oh yeah! User table created successfully"))
+  .catch(err => console.log("BTW, did you enter wrong database credentials?"));
+
+// create some helper functions to work on the database
+const createUser = async ({ name, password }) => {
+  return await User.create({ name, password });
+};
+const getAllUsers = async () => {
+  return await User.findAll();
+};
+const getUser = async obj => {
+  return await User.findOne({
+    where: obj
+  });
+};
+
+// get all users
+app.get("/users", function(req, res) {
+  getAllUsers().then(user => res.json(user));
+});
+// register route
+app.post("/register", function(req, res, next) {
+  const { name, password } = req.body;
+  createUser({ name, password }).then(user =>
+    res.json({ user, msg: "account created successfully" })
+  );
+});
