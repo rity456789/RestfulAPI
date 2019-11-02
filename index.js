@@ -51,19 +51,12 @@ User.sync()
 const createUser = async ({ name, password }) => {
   return await User.create({ name, password });
 };
-const getAllUsers = async () => {
-  return await User.findAll();
-};
 const getUser = async obj => {
   return await User.findOne({
     where: obj
   });
 };
 
-// get all users
-app.get("/users", function(req, res) {
-  getAllUsers().then(user => res.json(user));
-});
 // register route
 app.post("/register", function(req, res, next) {
   const { name, password } = req.body;
