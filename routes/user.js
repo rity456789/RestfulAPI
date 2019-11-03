@@ -1,8 +1,8 @@
 const express = require("express");
-const router = express.Router();
 const jwt = require("jsonwebtoken");
 const passport = require("passport");
 const User = require("../connectToDB");
+const router = express.Router();
 
 const createUser = async ({ name, password }) => {
   return await User.create({ name, password });
@@ -38,8 +38,8 @@ router.post("/login", function(req, res, next) {
         res.send(err);
       }
       // generate a signed son web token with the contents of user object and return it in the response
-      const token = jwt.sign(user, "your_jwt_secret");
-      return res.json({ user, token });
+      const token = jwt.sign(user, "1612041");
+      return res.json({ user, token, info });
     });
   })(req, res);
 });
