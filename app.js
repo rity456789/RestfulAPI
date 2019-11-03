@@ -7,7 +7,6 @@ var logger = require("morgan");
 var index = require("./routes/index");
 var me = require("./routes/me");
 var user = require("./routes/user");
-var port = process.env.port || 3000;
 
 const passport = require("passport");
 
@@ -46,7 +45,5 @@ app.use(function(err, req, res, next) {
   res.status(err.status || 500);
   res.render("error");
 });
-
-app.listen(port);
 
 module.exports = app;
