@@ -5,8 +5,8 @@ var cookieParser = require("cookie-parser");
 var logger = require("morgan");
 
 var index = require("./routes/index");
+var me = require("./routes/me");
 var user = require("./routes/user");
-var auth = require("./routes/auth");
 
 const passport = require("passport");
 
@@ -25,8 +25,8 @@ app.use(cookieParser());
 app.use(express.static(path.join(__dirname, "public")));
 
 app.use("/", index);
-app.use("/user", passport.authenticate("jwt", { session: false }), user);
-app.use("/auth", auth);
+app.use("/me", passport.authenticate("jwt", { session: false }), me);
+app.use("/user", user);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
